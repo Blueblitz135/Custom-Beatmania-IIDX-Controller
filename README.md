@@ -1,5 +1,7 @@
 # Custom Beatmania IIDX Controller
 
+![](overview.jpeg)
+
 This repository contains the firmware and build notes for a DIY **Beatmania IIDX-style arcade controller** built around an **Arduino Leonardo** acting as a **USB HID keyboard**.
 
 ## Features
