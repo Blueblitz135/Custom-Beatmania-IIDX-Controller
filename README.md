@@ -17,7 +17,7 @@ This repository contains the firmware and build notes for a DIY **Beatmania IIDX
 - Button **LEDs** for visual feedback
 - Common ground wiring for switches + LEDs (all grounds tied to Arduino GND)
 
-## Wiring Notes (High-Level)
+## Wiring Notes
 - Buttons are configured with `INPUT_PULLUP`, meaning:
   - **Idle** reads `HIGH`
   - **Pressed** reads `LOW` (switch connects signal to GND)
