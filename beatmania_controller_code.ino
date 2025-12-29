@@ -7,7 +7,7 @@ int buttonPins[nBut] = {3, 4, 6, 8, 10, 12, A5, A3, A1};
 int buttonState[nBut] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 int buttonPState[nBut] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 int ledPins[nLED] = {2, 5, 7, 9, 11, 13, A4, A2, A0}; 
-uint8_t butKeys[nBut] = {'f', 'g', 't', 'y', 'u', 'h', 'j', KEY_RETURN, KEY_LEFT_SHIFT}; 
+uint8_t butKeys[nBut] = {'f', 'g', 't', 'y', 'u', 'h', 'j', KEY_RETURN, KEY_LEFT_SHIFT};  // Modify values to change which key press each button maps to
 
 unsigned long lastDebounceTime[nBut] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 unsigned long debounceTimer[nBut] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -28,8 +28,8 @@ volatile int counter = 0;
 int mCount = 0;
 int numInt = 0;
 int pNumInt = 0;
-uint8_t ttRightKey = '`';
-uint8_t ttLeftKey = '1';
+uint8_t ttRightKey = '1';
+uint8_t ttLeftKey = '`';
 boolean stop = false;
 
 
@@ -75,12 +75,6 @@ void loop() {
 
       if (debounceTimer[i] > debounceDelay) {
         if (buttonState[i] == LOW) {
-          // if (stop) {
-          //   stop = false;
-          // } else {
-          //   stop = true;
-          // }
-          
           Keyboard.press(butKeys[i]);
           digitalWrite(ledPins[i], HIGH);
         } else {
@@ -105,7 +99,7 @@ void loop() {
   }
 
   if ((mCount > 70)) {
-    // If greater than 200 cycles of no interupt, then release the keys
+    // If greater than 70 cycles of no interupt, then release the keys
       Keyboard.release(ttRightKey);
       Keyboard.release(ttLeftKey);
       ttRight = false;
@@ -130,18 +124,8 @@ void read_encoder() {
   
   encval += enc_states[( old_AB & 0x0f )];
 
-  // if (ttRight && encval < 60) {
-  //     ttRight = false;
-  //     Keyboard.release(ttRightKey);
-  // }
-
-  // if (ttLeft && encval > -200) {
-  //     ttLeft = false;
-  //     Keyboard.release(ttLeftKey);
-  //   }
-
-  // Update counter if encoder has rotated a full indent, that is at least 4 steps
-  if( encval > 70 ) {        // Four steps forward
+  // Update counter if encoder has rotated a full indent, that is at least 100 steps
+  if( encval > 100 ) {         //Case for clockwise rotation, change this value to adjust turntable sensitivity
     int changevalue = 1;
     if((micros() - _lastIncReadTime) < _pauseLength) {
       changevalue = _fastIncrement * changevalue; 
@@ -169,7 +153,7 @@ void read_encoder() {
     lastCounter = counter;
 
   }
-  else if( encval < -70 ) {        // Four steps backward
+  else if( encval < -100 ) {        // Case for counter-clockwise rotation, change this value to adjust turntable sensitivity
     int changevalue = -1;
     if((micros() - _lastDecReadTime) < _pauseLength) {
       changevalue = _fastIncrement * changevalue; 
@@ -185,7 +169,7 @@ void read_encoder() {
   
 
     if ((lastCounter > counter) && !ttLeft) {
-      // Press "`" if encoder is turning clockwise
+      // Press "`" if encoder is turning counter-clockwise
       Keyboard.press(ttLeftKey);
       Keyboard.release(ttRightKey);
       ttLeft = true;
