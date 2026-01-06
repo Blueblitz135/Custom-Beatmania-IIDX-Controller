@@ -35,4 +35,5 @@ Huge credit to **thomasstar** and the project below:
 I used the **CAD files** from thomasstar’s repository as the basis for the physical design/case of this controller.
 
 This repository contains my firmware/build notes for the controller.  
+
 For CAD/design licensing and usage terms, please refer to the original project linked above (thomasstar / GJ-Tho-Modular-V2).
